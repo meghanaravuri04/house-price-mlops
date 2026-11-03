@@ -1,2 +1,55 @@
- schema: '2.0'
-stages: {}
+schema: '2.0'
+stages:
+  train:
+    cmd: python -m src.train
+    deps:
+    - path: data/houses.csv
+      hash: md5
+      md5: 9149348a95c55847d2bf0c53f7f52aab
+      size: 501
+    - path: src/preprocess.py
+      hash: md5
+      md5: 4323cd288f09a953af6392200371d2e3
+      size: 1478
+    - path: src/train.py
+      hash: md5
+      md5: e1168ea9a6b1416695fabffa84840b0d
+      size: 1341
+    params:
+      params.yaml:
+        data.path: data/houses.csv
+        data.random_state: 42
+        model.max_depth: 10
+        model.n_estimators: 100
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: 066f356a85080c118188b85944c1e23b
+      size: 174994
+  evaluate:
+    cmd: python -m src.evaluate
+    deps:
+    - path: data/houses.csv
+      hash: md5
+      md5: 9149348a95c55847d2bf0c53f7f52aab
+      size: 501
+    - path: models/model.pkl
+      hash: md5
+      md5: 066f356a85080c118188b85944c1e23b
+      size: 174994
+    - path: src/evaluate.py
+      hash: md5
+      md5: 2470cedaeb31ea2dddc4c26474ddd1b7
+      size: 1294
+    - path: src/preprocess.py
+      hash: md5
+      md5: 4323cd288f09a953af6392200371d2e3
+      size: 1478
+    params:
+      params.yaml:
+        data.path: data/houses.csv
+    outs:
+    - path: metrics/metrics.json
+      hash: md5
+      md5: ef7759761746c9743e242abd1fcb46bf
+      size: 123
