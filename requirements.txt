@@ -1,0 +1,22 @@
+ pandas
+numpy
+scikit-learn
+joblib
+PyYAML
+
+mlflow
+dagshub
+dvc
+dvc-s3
+
+fastapi
+uvicorn
+pydantic
+
+streamlit
+requests
+
+pytest
+httpx
+
+python-dotenv

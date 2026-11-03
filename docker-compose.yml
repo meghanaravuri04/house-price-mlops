@@ -1,0 +1,23 @@
+ services:
+
+  fastapi:
+    build: .
+    container_name: house-price-api
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
+
+  streamlit:
+    build: .
+    container_name: house-price-ui
+    command: streamlit run streamlit_app.py --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    depends_on:
+      - fastapi
+    environment:
+      API_URL: http://fastapi:8000/predict
+    volumes:
+      - ./models:/app/models

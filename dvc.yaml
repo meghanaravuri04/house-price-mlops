@@ -1,0 +1,27 @@
+stages:
+
+  train:
+    cmd: python -m src.train
+    deps:
+      - data/houses.csv
+      - src/train.py
+      - src/preprocess.py
+    params:
+      - data.path
+      - data.random_state
+      - model.n_estimators
+      - model.max_depth
+    outs:
+      - models/model.pkl
+
+  evaluate:
+    cmd: python -m src.evaluate
+    deps:
+      - models/model.pkl
+      - data/houses.csv
+      - src/evaluate.py
+      - src/preprocess.py
+    params:
+      - data.path
+    metrics:
+      - metrics/metrics.json
